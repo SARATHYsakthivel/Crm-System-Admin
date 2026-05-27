@@ -1,0 +1,22 @@
+Feature: CRM Register and Login Functionality
+
+  Scenario: User registers successfully
+    Given user launch browser
+    When user opens CRM register page
+    And user enters name
+    And user enters register email
+    And user enters register password
+    And user enters confirm password
+    And user enters mobile number
+    And user clicks register button
+    And user should register successfully
+	Then user should login successfully
+	
+	
+  Scenario: User login with valid credentials
+
+    Given user launches browser
+    And user enters login email
+    And user enters login password
+    And user clicks login button
+    Then user should login successfully

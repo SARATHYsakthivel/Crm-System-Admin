@@ -1,0 +1,161 @@
+package stepDefinition;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
+public class CrmSystem {
+
+	WebDriver driver;
+
+	@Given("user launch browser")
+	public void user_launch_browser() {
+
+		driver = new ChromeDriver();
+
+		driver.manage().window().maximize();
+	}
+
+	@When("user opens CRM register page")
+	public void user_opens_crm_register_page() throws InterruptedException {
+
+		driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
+
+		Thread.sleep(2000);
+
+		WebElement regClick = driver.findElement(By.xpath("//a[text()='Register Now']"));
+
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		js.executeScript("arguments[0].click();", regClick);
+	}
+
+	@And("user enters name")
+	public void user_enters_name() {
+		
+		WebElement userName = driver.findElement(By.xpath("//input[@placeholder='Enter name']"));
+		
+		userName.sendKeys("Parthasarathy S");
+	}
+
+	@And("user enters register email")
+	public void user_enters_register_email() {
+		
+		Actions act = new Actions(driver);
+		
+		WebElement userEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
+		
+		act.click(userEmail).sendKeys("sarathysakthivel97@gmail.com").build().perform();
+	}
+
+	@And("user enters register password")
+	public void user_enters_register_password() throws InterruptedException {
+		
+		Thread.sleep(1000);
+
+		WebElement userPass = driver.findElement(By.xpath("//input[@placeholder='Enter password']"));
+
+		userPass.sendKeys("Parthasarathy@2026");
+	}
+
+	@And("user enters confirm password")
+	public void user_enters_confirm_password() throws InterruptedException {
+		
+	Thread.sleep(1000);
+
+	WebElement userConfirmPass = driver.findElement(By.xpath("//input[@placeholder='confirm Password']"));
+
+	userConfirmPass.sendKeys("Parthasarathy@2026");
+		
+	}
+
+	@And("user enters mobile number")
+	public void user_enters_mobile_number() {
+
+		WebElement userMobNum = driver.findElement(By.xpath("//input[@placeholder='Enter mobile number']"));
+		
+		userMobNum.sendKeys("6374060891");
+		
+	}
+	
+	@And("user clicks register button")
+	public void user_clicks_register_button() throws InterruptedException {
+		
+		WebElement userRegister = driver.findElement(By.xpath("//button[text()='Register']"));
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+
+		js.executeScript("arguments[0].click();", userRegister);
+		
+		userRegister.click();	
+
+	}
+
+	@Then("user should register successfully")
+	public void user_should_register_successfully() throws InterruptedException {
+		
+		System.out.println("The user has Successfully Registered");
+		
+		Thread.sleep(1000);
+		
+		driver.close();
+		
+	}
+	
+	 @Given("user launches browser")
+	    public void user_launches_browser() {
+
+	        driver = new ChromeDriver();
+
+	        driver.manage().window().maximize();
+	        
+	        driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
+	    }
+
+	    @And("user enters login email")
+	    public void user_enter_login_email() throws InterruptedException{
+	    	
+	    	Thread.sleep(2000);  
+	    	
+			WebElement loginEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
+			
+			loginEmail.sendKeys("vaishnavibcabhc@gmail.com");
+	    }
+
+	    @And("user enters login password")
+	    public void user_enter_login_password() {
+
+	    	WebElement loginPassword=driver.findElement(By.xpath("//input[@placeholder='Enter password']"));
+	    	
+			loginPassword.sendKeys("Vaishu@123");
+	       
+	    }
+
+	    @And("user clicks login button")
+	    public void user_click_login_button() throws InterruptedException {
+
+	        WebElement login = driver.findElement(By.xpath("//button[text()='Log In']"));
+	        
+	        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+	        js.executeScript("arguments[0].click();", login);
+
+
+	        Thread.sleep(3000);
+	    }
+
+	    @Then("user should login successfully")
+	    public void user_should_login_successfully() {
+
+	        System.out.println("User logged in successfully");
+	    }
+
+}
