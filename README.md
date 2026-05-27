@@ -23,8 +23,6 @@ This project automates the testing of critical user workflows in the CRM System:
 - **User Registration** - Complete registration flow with validation
 - **User Login** - Login functionality with valid credentials
 
-The tests are written in **Gherkin language** (feature files) for better readability and BDD approach, with step implementations in Java.
-
 ## ✨ Features
 
 - ✅ Automated user registration testing
