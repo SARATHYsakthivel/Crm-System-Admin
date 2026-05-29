@@ -5,18 +5,48 @@ Feature: CRM Register and Login Functionality
     When user opens CRM register page
     And user enters name
     And user enters register email
-    And user enters register password
-    And user enters confirm password
+    And user enters password and confirm password
     And user enters mobile number
     And user clicks register button
     And user should register successfully
-	Then user should login successfully
-	
-	
-  Scenario: User login with valid credentials
+    Then user should login successfully
 
+  Scenario: User tries to register with empty fields
+    Given user launch browser for negative test
+    When user opens CRM register page for negative test
+    And user clicks register button for negative test
+    Then user should see required fields error message
+
+  Scenario: User tries to register with mismatched passwords
+    Given user launches browser for mismatch password test
+    When user opens CRM register page for mismatch password test
+    And user enter name
+    And user enters duplicate register email
+    And user enters invalid register password
+    And user enters invalid confirm password
+    And user enter mobile number
+    And user clicks register button for mismatch password test
+    Then user should see password mismatch error message
+
+  Scenario: User login with valid credentials
     Given user launches browser
     And user enters login email
     And user enters login password
     And user clicks login button
     Then user should login successfully
+
+  Scenario: User tries to login with invalid credentials
+    Given user launches browser for invalid login test
+    When user opens CRM login page for invalid login test
+    And user enters invalid login email
+    And user enters wrong login password
+    And user clicks login button for invalid login test
+    Then user should see invalid credentials error message
+
+  Scenario: User tries to login with empty email
+    Given user launches browser for empty email test
+    When user opens CRM login page for empty email test
+    And user enters empty login email
+    And user enters login password for negative test
+    And user clicks login button for empty email test
+    Then user should see login email required error message
