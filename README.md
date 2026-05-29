@@ -13,9 +13,6 @@ A comprehensive automation testing framework for the CRM System using **Selenium
 - [Project Structure](#project-structure)
 - [Running Tests](#running-tests)
 - [Test Scenarios](#test-scenarios)
-- [Configuration](#configuration)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## 🎯 Project Overview
 
