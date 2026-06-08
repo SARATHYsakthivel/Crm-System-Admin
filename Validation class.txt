@@ -1,0 +1,76 @@
+package stepDefinition;
+
+import org.junit.Test;
+import org.openqa.selenium.WebDriver;
+import org.testng.asserts.SoftAssert;
+
+import com.proect.page.LoginRegisterPage;
+
+public class Validation {
+
+	public WebDriver driver;
+	public LoginRegisterPage registerPage;
+
+	public Validation(WebDriver driver, LoginRegisterPage registerPage) {
+		this.driver = driver;
+		this.registerPage = registerPage;
+	}
+
+	public void validateAllFields() {
+		SoftAssert verify = new SoftAssert();
+
+		if (driver.findElements(registerPage.username).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.username).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.username).isEnabled(),
+					"username fields is not displayed");  
+		}
+		if (driver.findElements(registerPage.email).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.email).isDisplayed(), "username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.email).isEnabled(), "username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.password).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.password).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.password).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.confirmPassword).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.confirmPassword).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.confirmPassword).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.mobileNumber).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.mobileNumber).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.mobileNumber).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.registerButton).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.registerButton).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.registerButton).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.loginEmail).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.loginEmail).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.loginEmail).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.loginPassword).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.loginPassword).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.loginPassword).isEnabled(),
+					"username fields is not displayed");
+		}
+		if (driver.findElements(registerPage.loginButton).size() > 0) {
+			verify.assertTrue(driver.findElement(registerPage.loginButton).isDisplayed(),
+					"username fields is not displayed");
+			verify.assertTrue(driver.findElement(registerPage.loginButton).isEnabled(),
+					"username fields is not displayed");
+		}
+		verify.assertAll();
+	}
+}
