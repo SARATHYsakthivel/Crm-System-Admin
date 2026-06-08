@@ -1,0 +1,26 @@
+package stepDefinition;
+
+import com.proect.page.LoginRegisterPage;
+
+import base.BaseClass;
+import io.cucumber.java.AfterAll;
+import io.cucumber.java.Before;
+import io.cucumber.java.BeforeAll;
+
+public class Hooks {
+
+	@BeforeAll
+	public static void launchBrowser() {
+		BaseClass.launchApplication();
+	}
+
+	@Before
+	public void initializePage() {
+		CrmSystem.loginregisterpage = new LoginRegisterPage(BaseClass.driver);
+	}
+
+	@AfterAll
+	public static void quitBrowser() {
+		BaseClass.quitBrowser();
+	}
+}
