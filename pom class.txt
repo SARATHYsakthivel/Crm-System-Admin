@@ -1,0 +1,30 @@
+package com.proect.page;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+
+public class LoginRegisterPage {
+
+	WebDriver driver;
+
+	public LoginRegisterPage(WebDriver driver) {
+		this.driver = driver;
+	}
+
+	// Register page
+
+	public By username = By.xpath("//input[@placeholder='Enter name']");
+	public By email = By.xpath("//input[@placeholder='Enter email']");
+	public By password = By.xpath("//input[@placeholder='Enter password']");
+	public By confirmPassword = By.xpath("//input[@placeholder='confirm Password']");
+	public By mobileNumber = By.xpath("//input[@placeholder='Enter mobile number']");
+	public By registerButton = By.xpath("//button[text()='Register']");
+	
+	// Login page
+
+	public By loginEmail = By.xpath("//input[@placeholder='Enter email']");
+	public By loginPassword = By.xpath("//input[@placeholder='Enter password']");
+	public By loginButton = By.xpath("//button[text()='Log In']");
+
+	
+}
