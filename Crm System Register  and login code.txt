@@ -1,470 +1,137 @@
 package stepDefinition;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.Duration;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import org.openqa.selenium.io.FileHandler;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 
+import com.proect.page.LoginRegisterPage;
+
+import base.BaseClass;
+import io.cucumber.java.Before;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import junit.framework.Assert;
 
 public class CrmSystem {
 
-	WebDriver driver;
+	private static WebDriver driver;
+	public static LoginRegisterPage loginregisterpage;
 
-	@Given("user launch browser")
-	public void user_launch_browser() {
+	@Before
 
-		driver = new ChromeDriver();
+	@Given("user launches browser for registration")
+	public void user_launches_browser_for_registration() {
 
-		driver.manage().window().maximize();
 	}
 
 	@When("user opens CRM register page")
 	public void user_opens_crm_register_page() throws InterruptedException {
 
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
+		BaseClass.navigateTo(BaseClass.REGISTER_URL);
 
-		Thread.sleep(2000);
+		WebDriverWait wait=new WebDriverWait(BaseClass.driver,Duration.ofSeconds(10));
 
-		WebElement regClick = driver.findElement(By.xpath("//a[text()='Register Now']"));
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("arguments[0].click();", regClick);
 	}
 
-	@And("user enters name")
-	public void user_enters_name() {
-
-		WebElement userName = driver.findElement(By.xpath("//input[@placeholder='Enter name']"));
-
-		userName.sendKeys("Parthasarathy S");
+	@And("user enters username as {string}")
+	public void user_enters_username(String name) {
+		BaseClass.driver.findElement(loginregisterpage.username).sendKeys(name);
 	}
 
-	@And("user enters register email")
-	public void user_enters_register_email() {
+	@And("user enters register email as {string}")
+	public void user_enters_register_email(String email) {
+		BaseClass.driver.findElement(loginregisterpage.email).sendKeys(email);
 
-		Actions act = new Actions(driver);
-
-		WebElement userEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
-
-		act.click(userEmail).sendKeys("sarathysakthivel97@gmail.com").build().perform();
 	}
 
-	@And("user enters password and confirm password")
-	public void user_enters_password_and_confirm_password() throws InterruptedException {
-
-		Thread.sleep(2000);
-
-		String password = "Parthasarathy@2026";
-
-		String confirmPassword = "Parthasarathy@2026";
-
-		if (password.equals(confirmPassword)) {
-			driver.findElement(By.xpath("//input[@placeholder='Enter password']")).sendKeys(password);
-
-			Thread.sleep(2000);
-
-			driver.findElement(By.xpath("//input[@placeholder='confirm Password']")).sendKeys(confirmPassword);
-
-			System.out.println("Password Matched");
-
-		}
-
-		else {
-
-			System.out.println("Password Mismatch");
-
-		}
+	@And("user enters password as {string}")
+	public void user_enters_password(String password) {
+		BaseClass.driver.findElement(loginregisterpage.password).sendKeys(password);
 	}
 
-	@And("user enters mobile number")
-	public void user_enters_mobile_number() {
+	@And("user enters confirm password as {string}")
+	public void user_enters_confirm_password(String confirmPassword) {
+		BaseClass.driver.findElement(loginregisterpage.confirmPassword).sendKeys(confirmPassword);
+	}
 
-		WebElement userMobNum = driver.findElement(By.xpath("//input[@placeholder='Enter mobile number']"));
-
-		userMobNum.sendKeys("6374060891");
-
+	@And("user enters mobile number as {string}")
+	public void user_enters_mobile_number(String mobile) {
+		BaseClass.driver.findElement(loginregisterpage.mobileNumber).sendKeys(mobile);
 	}
 
 	@And("user clicks register button")
 	public void user_clicks_register_button() throws InterruptedException {
 
-		WebElement userRegister = driver.findElement(By.xpath("//button[text()='Register']"));
+		BaseClass.driver.findElement(loginregisterpage.registerButton).click();
 
-		JavascriptExecutor js = (JavascriptExecutor) driver;
+		BaseClass.takeScreenshot("Register button");
 
-		js.executeScript("arguments[0].click();", userRegister);
-
-		userRegister.click();
-
+		WebDriverWait wait=new WebDriverWait(BaseClass.driver,Duration.ofSeconds(10));
 	}
 
-	@Then("user should register successfully")
-	public void user_should_register_successfully() throws InterruptedException {
+	@Then("user should validate all the fields")
+	public void user_should_validate_all_the_fields() {
 
-		Thread.sleep(3000);
-
-		String actualTitle = driver.getTitle();
-
-		System.out.println("The user has Successfully Registered");
-
-		driver.close();
-
-	}
-
-	// NEGATIVE TEST SCENERIOS FOR REGISTER
-	
-	//USER TRIES TO REGISTER WITH EMPTY FIELDS
-
-	@Given("user launch browser for negative test")
-	public void user_launch_browser_for_negative_test() {
-
-		driver = new ChromeDriver();
-
-		driver.manage().window().maximize();
-
-	}
-
-	@When("user opens CRM register page for negative test")
-	public void user_opens_crm_register_page_for_negative_test() throws InterruptedException {
-
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/register");
-
-		Thread.sleep(2000);
-	}
-
-	@And("user clicks register button for negative test")
-	public void user_clicks_register_button_for_negative_test() {
-
-		WebElement userRegister = driver.findElement(By.xpath("//button[text()='Register']"));
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("arguments[0].click();", userRegister);
-
-		userRegister.click();
-
-	}
-
-	@Then("user should see required fields error message")
-	public void user_should_see_required_fields_error_message() throws InterruptedException, IOException {
-
-		System.out.println("Error Message has been showed");
-
-		Thread.sleep(3000);
-
-		driver.close();
-	}
-	
-	//USER TRIES TO REGISTER WITH MISMATCHED PASSWORD
-
-	@Given("user launches browser for mismatch password test")
-	public void user_launches_browser_for_mismatch_password_test() {
-
-		driver = new ChromeDriver();
-
-		driver.manage().window().maximize();
-
-	}
-
-	@When("user opens CRM register page for mismatch password test")
-	public void user_opens_crm_register_page_for_mismatch_password_test() throws InterruptedException {
-
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/register");
-
-		Thread.sleep(2000);
-
-	}
-
-	@And("user enter name")
-	public void user_enter_name() {
-
-		WebElement userName = driver.findElement(By.xpath("//input[@placeholder='Enter name']"));
-
-		userName.sendKeys("Parthasarathy");
-	}
-
-	@And("user enters duplicate register email")
-	public void user_enters_duplicate_register_email() {
-
-		Actions act = new Actions(driver);
-
-		WebElement userEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
-
-		act.click(userEmail).sendKeys("sarathysakthivel97@gmail.com").build().perform();
-	}
-
-	@And("user enters invalid register password")
-	public void user_enters_invalid_register_password() throws InterruptedException {
-
-		String password = "Parthasarathy@2026";
-
-		if (password.length() > 8) {
-			driver.findElement(By.xpath("//input[@placeholder='Enter password']")).sendKeys(password);
-
-			System.out.println("Valid Password");
-
+		String currentUrl = BaseClass.driver.getCurrentUrl();
+		Validation validator = new Validation(BaseClass.driver, loginregisterpage);
+		if (currentUrl.contains("register")) {
+			validator.validateAllFields();
 		} else {
-
-			System.out.println("Invalid Password");
-
+			System.out.println(" ");
 		}
+	System.out.println("Success");
 	}
 
-	@And("user enters invalid confirm password")
-	public void user_enters_invalid_confirm_password() throws InterruptedException {
-
-		Thread.sleep(1000);
-
-		WebElement userConfirmPass = driver.findElement(By.xpath("//input[@placeholder='confirm Password']"));
-
-		userConfirmPass.sendKeys("Parthasarathy#2025");
+	@Given("user launches browser for login")
+	public void user_launches_browser_for_login() {
 
 	}
 
-	@And("user enter mobile number")
-	public void user_enter_mobile_number() {
+	@When("user opens CRM login page")
+	public void user_opens_crm_login_page() throws InterruptedException {
 
-		String mobile = "8825528990";
+		BaseClass.navigateTo(BaseClass.BASE_URL);
 
-		WebElement userMobNum = driver.findElement(By.xpath("//input[@placeholder='Enter mobile number']"));
-
-		for (int i = 0; i < 1; i++) {
-			userMobNum.sendKeys(mobile);
-		}
-
-		System.out.println("Mobile Number Entered");
+		WebDriverWait wait=new WebDriverWait(BaseClass.driver,Duration.ofSeconds(10));
 	}
 
-	@And("user clicks register button for mismatch password test")
+	@And("user enters login email as {string}")
+	public void user_enters_login_email(String emailid) {
 
-	public void user_clicks_register_button_for_mismatch_password_test() {
-
-		WebElement userRegister = driver.findElement(By.xpath("//button[text()='Register']"));
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("arguments[0].click();", userRegister);
-
-		userRegister.click();
-
+		BaseClass.driver.findElement(loginregisterpage.loginEmail).sendKeys(emailid);
 	}
 
-	@Then("user should see password mismatch error message")
-	public void user_should_see_password_mismatch_error_message() throws InterruptedException, IOException {
+	@And("user enters login password as {string}")
+	public void user_enters_login_password(String loginpassword) {
 
-		WebElement error = driver.findElement(By.xpath("//p"));
-
-		System.out.println("Error Message Displayed");
-
-		TakesScreenshot ts = (TakesScreenshot) driver;
-
-		File source = ts.getScreenshotAs(OutputType.FILE);
-
-		File destination = new File("screenshots/error11.png");
-
-		FileHandler.copy(source, destination);
-
-		Thread.sleep(5000);
-
-		driver.close();
-	}
-
-	// POSTIVE TESTCASE FOR LOGIN SCENERIO
-
-	@Given("user launches browser")
-	public void user_launches_browser() {
-
-		driver = new ChromeDriver();
-
-		driver.manage().window().maximize();
-
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
-	}
-
-	@And("user enters login email")
-	public void user_enter_login_email() throws InterruptedException {
-
-		Thread.sleep(2000);
-
-		WebElement loginEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
-
-		loginEmail.sendKeys("vaishnavibcabhc@gmail.com");
-	}
-
-	@And("user enters login password")
-	public void user_enter_login_password() {
-
-		Actions act = new Actions(driver);
-
-		WebElement loginPassword = driver.findElement(By.xpath("//input[@placeholder='Enter password']"));
-
-		act.sendKeys(loginPassword, "Vaishu@123").perform();
-
+		BaseClass.driver.findElement(loginregisterpage.loginPassword).sendKeys(loginpassword);
 	}
 
 	@And("user clicks login button")
-	public void user_click_login_button() throws InterruptedException {
+	public void user_clicks_login_button() throws InterruptedException {
 
-		WebElement login = driver.findElement(By.xpath("//button[text()='Log In']"));
+		BaseClass.driver.findElement(loginregisterpage.loginButton).click();
 
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("arguments[0].click();", login);
-
-		Thread.sleep(3000);
-	}
-
-	@Then("user should login successfully")
-	public void user_should_login_successfully() throws InterruptedException {
-
-		System.out.println("User logged in successfully");
-
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(2));
-
-		driver.close();
-	}
-
-	// NEGATIVE TESTCASE FOR LOGIN SCENERIO
-	
-	//USER LOGIN WITH WRONG USERNAME AND WRONG PASSWORD
-
-	@Given("user launches browser for invalid login test")
-	public void user_launches_browser_for_invalid_login_test() {
-
-		driver = new ChromeDriver();
-
-		driver.manage().window().maximize();
-
-	}
-	
-	@When("user opens CRM login page for invalid login test")
-	public void user_opens_crm_login_page_for_invalid_login_test() throws InterruptedException {
-
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
+		BaseClass.takeScreenshot("Login button clicked");
 
 		Thread.sleep(3000);
 
 	}
 
-	@And("user enters invalid login email")
-	public void user_enters_invalid_login_email() {
+	@Then("user should validate all the field")
+	public void user_should_validate_all_the_field() {
 
-		String email = "VaibhavSuryvanshi@gmail.com";
-
-		if (email.contains("@gmail.com")) {
-			driver.findElement(By.xpath("//input[@placeholder='Enter email']")).sendKeys(email);
-
-			System.out.println("Valid Email");
+		String currentUrl = BaseClass.driver.getCurrentUrl();
+		Validation validator = new Validation(BaseClass.driver, loginregisterpage);
+		if (currentUrl.contains("login")) {
+			validator.validateAllFields();
 		} else {
-			System.out.println("Invalid Email");
+			System.out.println("");
 		}
-	}
 
-	@And("user enters wrong login password")
-	public void user_enters_wrong_login_password() {
-
-		Actions act = new Actions(driver);
-
-		WebElement loginPassword = driver.findElement(By.xpath("//input[@placeholder='Enter password']"));
-
-		act.sendKeys(loginPassword, "Vaibhav@123").perform();
-	}
-
-	@And("user clicks login button for invalid login test")
-	public void user_clicks_login_button_for_invalid_login_test() throws InterruptedException {
-
-		WebElement login = driver.findElement(By.xpath("//button[text()='Log In']"));
-
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-
-		js.executeScript("arguments[0].click();", login);
-
-		Thread.sleep(3000);
-
-	}
-
-	@Then("user should invalid credentials error message")
-	public void user_should_see_invalid_credentials_error_message() throws InterruptedException {
-
-		System.out.println("Error message displayed");
-
-		Thread.sleep(2000);
-
-		driver.close();
-	}
-
-	
-	//USER TRY TO LOGIN WITH EMPTY EMAIL
-	
-	@Given("user launches browser for empty email test")
-	public void user_launches_browser_for_empty_email_test() {
-
-		driver = new ChromeDriver();
-
-		driver.manage().window().maximize();
-
-	}
-
-	@When("user opens CRM login page for empty email test")
-	public void user_opens_crm_login_page_for_empty_email_test() throws InterruptedException {
-
-		driver.get("https://d2mfj34wvggqrd.cloudfront.net/");
-
-		Thread.sleep(2000);
-	}
-
-	@And("user enters empty login email")
-	public void user_enters_empty_login_email() {
-
-		WebElement loginEmail = driver.findElement(By.xpath("//input[@placeholder='Enter email']"));
-
-		loginEmail.sendKeys("");
-	}
-
-	@And("user enters login password for negative test")
-	public void user_enters_login_password_for_negative_test() {
-
-		Actions act = new Actions(driver);
-
-		WebElement loginPassword = driver.findElement(By.xpath("//input[@placeholder='Enter password']"));
-
-		act.sendKeys(loginPassword, "Vaishu@123").perform();
-
-	}
-
-	@And("user clicks login button for empty email test")
-	public void user_clicks_login_button_for_empty_email_test() {
-
-		WebElement login = driver.findElement(By.xpath("//button[text()='Log In']"));
-
-		login.click();
-	}
-
-	@Then("user should see login email required error message")
-	public void user_should_see_login_email_required_error_message() throws InterruptedException {
-		
-		System.out.println("Error msg should need to pass");
-		
-		Thread.sleep(3000);
-		
-		driver.close();
 	}
 
 }
